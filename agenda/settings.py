@@ -18,10 +18,11 @@ else:
         }
     }
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "chave-insegura-desenvolvimento")
+SECRET_KEY = os.getenv("SECRET_KEY", "chave-insegura-desenvolvimento")
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
