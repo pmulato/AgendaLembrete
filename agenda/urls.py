@@ -37,5 +37,11 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/protegido/', protegido),  # <- Rota protegida com JWT
 ]
+from django.urls import include
+from agenda import api_urls
+
+urlpatterns += [
+    path('api/', include(api_urls)),  # <- Adiciona as rotas protegidas de tarefas
+]
 
 
