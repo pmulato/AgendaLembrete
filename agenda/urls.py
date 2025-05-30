@@ -15,7 +15,7 @@ def home(request):
 def login_api(request):
     if request.method == 'POST':
         try:
-            data = json.loads(request.body)
+            data = json.loads(request.body.decode('utf-8'))
             username = data.get('username')
             password = data.get('password')
             user = authenticate(username=username, password=password)
