@@ -4,13 +4,14 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from agenda.views import protegido
 import json
 
 # Página inicial
 def home(request):
     return HttpResponse("AgendaLembrete online!")
 
-# API de login tradicional
+# API de login tradicional (sem JWT)
 @csrf_exempt
 def login_api(request):
     if request.method == 'POST':
@@ -27,11 +28,14 @@ def login_api(request):
             return JsonResponse({'success': False, 'error': str(e)}, status=400)
     return JsonResponse({'error': 'Método não permitido'}, status=405)
 
+# Rotas do projeto
 urlpatterns = [
     path('', home),
     path('admin/', admin.site.urls),
-    path('api/login/', login_api),  # login simples
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # JWT
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), # JWT Refresh
+    path('api/login/', login_api),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/protegido/', protegido),  # <- Rota protegida com JWT
 ]
+
 
