@@ -18,7 +18,10 @@ class TarefaViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        print("🔍 get_queryset chamado por:", self.request.user)
         return self.queryset.filter(usuario=self.request.user)
 
     def perform_create(self, serializer):
+        print("📥 Dados recebidos no POST:", self.request.data)
+        print("👤 Usuário autenticado:", self.request.user)
         serializer.save(usuario=self.request.user)
